@@ -1,4 +1,4 @@
-query RepositoryQuery ($keyword:String!){
+query RepositoryQuery($keyword:String!){
   search(query:$keyword, type:REPOSITORY, last:20) {
     edges {
       node {

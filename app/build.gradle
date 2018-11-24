@@ -33,4 +33,5 @@ dependencies {
 
     //Apollo client
     implementation 'com.apollographql.apollo:apollo-runtime:1.0.0-alpha3'
+    implementation "com.apollographql.apollo:apollo-android-support:1.0.0-alpha3"
 }
