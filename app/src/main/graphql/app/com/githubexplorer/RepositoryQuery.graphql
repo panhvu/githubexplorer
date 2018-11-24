@@ -1,0 +1,25 @@
+query RepositoryQuery ($keyword:String!){
+  search(query:$keyword, type:REPOSITORY, last:20) {
+    edges {
+      node {
+        ... on Repository {
+          name
+          description
+          forkCount
+          owner {
+            avatarUrl
+          }
+
+          stargazers {
+            totalCount
+          }
+          watchers {
+            totalCount
+          }
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+}
