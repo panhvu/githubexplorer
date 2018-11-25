@@ -1,5 +1,6 @@
 package app.com.githubexplorer.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -7,11 +8,12 @@ import android.support.v7.widget.SearchView
 import android.view.Menu
 import app.com.githubexplorer.R
 import app.com.githubexplorer.RepositoryQuery
+import app.com.githubexplorer.detail.DetailActivity
 import app.com.githubexplorer.di.Dependencies
 import app.com.githubexplorer.main.adapter.ReposAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), MainView {
+class MainActivity : AppCompatActivity(), MainView, ReposAdapter.RepoOnClickListener {
 
     private lateinit var presenter: MainPresenter
     private lateinit var adapter: ReposAdapter
@@ -23,7 +25,7 @@ class MainActivity : AppCompatActivity(), MainView {
         presenter = MainPresenter(this, Dependencies().mainInteractor)
 
         repos_list_view.layoutManager = LinearLayoutManager(this)
-        adapter = ReposAdapter(mutableListOf(), this)
+        adapter = ReposAdapter(mutableListOf(), this, this)
         repos_list_view.adapter = adapter
     }
 
@@ -50,6 +52,12 @@ class MainActivity : AppCompatActivity(), MainView {
     override fun showResults(results: MutableList<RepositoryQuery.AsRepository>) {
         adapter.reposList = results
         adapter.notifyDataSetChanged()
+    }
+
+    override fun onRepoClicked(repo: RepositoryQuery.AsRepository) {
+        val intent = Intent(this, DetailActivity::class.java)
+        //ToDo: add repo
+        startActivity(intent)
     }
 
     override fun onPause() {

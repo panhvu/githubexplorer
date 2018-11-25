@@ -17,10 +17,11 @@ class ReposViewHolder(val context: Context, view: View) : RecyclerView.ViewHolde
     val description = view.repo_description
     val forkCount = view.fork_count
 
-    fun bindItems(repo: RepositoryQuery.AsRepository) {
+    fun bindItems(repo: RepositoryQuery.AsRepository, listener: ReposAdapter.RepoOnClickListener) {
         Picasso.get().load(repo.owner().avatarUrl()).into(owner)
         name.text = repo.name()
         description.text = repo.description()
         forkCount.text = "${repo.forkCount()}"
+        itemView.setOnClickListener { listener.onRepoClicked(repo)}
     }
 }

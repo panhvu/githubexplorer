@@ -13,8 +13,13 @@ import app.com.githubexplorer.RepositoryQuery
 
 class ReposAdapter(
         var reposList: MutableList<RepositoryQuery.AsRepository>,
-        val context: Context
+        val context: Context,
+        private val listener: RepoOnClickListener
 ) : RecyclerView.Adapter<ReposViewHolder>() {
+
+    interface RepoOnClickListener {
+        fun onRepoClicked(repo: RepositoryQuery.AsRepository)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
             ReposViewHolder(
@@ -23,7 +28,7 @@ class ReposAdapter(
             )
 
     override fun onBindViewHolder(holder: ReposViewHolder, position: Int) {
-        holder.bindItems(reposList[position])
+        holder.bindItems(reposList[position], listener)
     }
 
     override fun getItemCount(): Int {
