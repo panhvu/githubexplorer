@@ -1,7 +1,7 @@
-query RepositoryQuery($keyword:String!){
-  search(query:$keyword, type:REPOSITORY, last:20) {
-    edges {
-      node {
+query RepositoryQuery ($keyword:String!){
+  search(query:$keyword, type:REPOSITORY, last: 20) {
+    repositoryCount
+    repositories: nodes {
         ... on Repository {
           name
           description
@@ -20,6 +20,5 @@ query RepositoryQuery($keyword:String!){
           updatedAt
         }
       }
-    }
   }
 }
