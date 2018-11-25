@@ -8,4 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Image -->
+    <style name="Image"/>
+    <style name="Image.BackgroundCircle">
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:shape">ring</item>
+        <item name="cardCornerRadius">20dp</item>
+    </style>
+
 </resources>
