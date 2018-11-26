@@ -1,6 +1,6 @@
 package app.com.githubexplorer.main
 
-import app.com.githubexplorer.RepositoryQuery
+import app.com.githubexplorer.data.Repository
 
 /**
  * Created by panhvu on 25.11.18.
@@ -8,6 +8,6 @@ import app.com.githubexplorer.RepositoryQuery
 
 interface MainView {
 
-    fun showResults(results: MutableList<RepositoryQuery.AsRepository>)
-
+    fun showResults(results: MutableList<Repository>)
+    fun showEmptyMessage()
 }

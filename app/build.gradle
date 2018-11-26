@@ -39,6 +39,8 @@ dependencies {
     testImplementation('com.nhaarman:mockito-kotlin:1.4.0') {
         exclude group: 'org.mockito', module: 'module-core'
     }
+    implementation("com.squareup.okhttp3:okhttp:3.12.0")
+    testImplementation("com.squareup.okhttp3:mockwebserver:3.12.0")
 
     //Apollo client
     implementation 'com.apollographql.apollo:apollo-runtime:1.0.0-alpha3'

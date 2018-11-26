@@ -1,9 +1,10 @@
 package app.com.githubexplorer.main.adapter
 
 import android.content.Context
+import android.net.Uri
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import app.com.githubexplorer.RepositoryQuery
+import app.com.githubexplorer.data.Repository
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_repo.view.*
 
@@ -17,11 +18,11 @@ class ReposViewHolder(val context: Context, view: View) : RecyclerView.ViewHolde
     val description = view.repo_description
     val forkCount = view.fork_count
 
-    fun bindItems(repo: RepositoryQuery.AsRepository, listener: ReposAdapter.RepoOnClickListener) {
-        Picasso.get().load(repo.owner().avatarUrl()).into(owner)
-        name.text = repo.name()
-        description.text = repo.description()
-        forkCount.text = "${repo.forkCount()}"
+    fun bindItems(repo: Repository, listener: ReposAdapter.RepoOnClickListener) {
+        Picasso.get().load(Uri.parse(repo.ownerUrl)).into(owner)
+        name.text = repo.name
+        description.text = repo.description
+        forkCount.text = "${repo.forkCount}"
         itemView.setOnClickListener { listener.onRepoClicked(repo)}
     }
 }

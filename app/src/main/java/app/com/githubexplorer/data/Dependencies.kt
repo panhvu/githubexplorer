@@ -1,6 +1,5 @@
-package app.com.githubexplorer.di
+package app.com.githubexplorer.data
 
-import app.com.githubexplorer.data.GraphQLManager
 import app.com.githubexplorer.main.MainInteractor
 
 /**
@@ -8,8 +7,6 @@ import app.com.githubexplorer.main.MainInteractor
  */
 
 open class Dependencies {
-
-    //val apolloClient = GraphQLManager().apolloClient
 
     val graphQlManager = GraphQLManager()
     val mainInteractor = MainInteractor(graphQlManager)

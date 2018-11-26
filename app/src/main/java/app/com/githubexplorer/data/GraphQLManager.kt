@@ -24,7 +24,8 @@ open class GraphQLManager {
     private val okHttpClient = OkHttpClient.Builder()
             .addInterceptor{ chain ->
                 chain.proceed(chain.request().newBuilder()
-                        .addHeader("Authorization", "bearer ede413efeee2b5081eb8b62b710ed21e6c4016bf")
+                        .addHeader("Authorization",
+                                "bearer ede413efeee2b5081eb8b62b710ed21e6c4016bf")
                         .build() )}
             .build()
 
@@ -49,7 +50,7 @@ open class GraphQLManager {
 
     }
 
-    val apolloClient = ApolloClient.builder()
+    private val apolloClient = ApolloClient.builder()
             .serverUrl(BASE_URL)
             .okHttpClient(okHttpClient)
             .addCustomTypeAdapter(CustomType.URI, uriCustomTypeAdapter)
