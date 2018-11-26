@@ -16,8 +16,6 @@ query RepositoryQuery ($keyword:String!){
           watchers {
             totalCount
           }
-          createdAt
-          updatedAt
         }
       }
   }

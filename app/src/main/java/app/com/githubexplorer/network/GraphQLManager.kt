@@ -1,4 +1,4 @@
-package app.com.githubexplorer.data
+package app.com.githubexplorer.network
 
 import android.net.Uri
 import app.com.githubexplorer.RepositoryQuery
@@ -9,8 +9,6 @@ import com.apollographql.apollo.fetcher.ApolloResponseFetchers
 import com.apollographql.apollo.response.CustomTypeAdapter
 import com.apollographql.apollo.response.CustomTypeValue
 import okhttp3.OkHttpClient
-import java.text.SimpleDateFormat
-import java.util.*
 
 /**
  * Created by panhvu on 25.11.18.
@@ -39,22 +37,11 @@ open class GraphQLManager {
         }
 
     }
-    private val GRAPHQL_DATE_FORMAT = SimpleDateFormat("yyyy-mm-dd", Locale.US)
-    private val dateCustomTypeAdapter = object : CustomTypeAdapter<Date> {
-        override fun decode(value: CustomTypeValue<*>): Date {
-            return GRAPHQL_DATE_FORMAT.parse(value.value.toString())
-        }
-        override fun encode(value: Date): CustomTypeValue<*> {
-            return CustomTypeValue.GraphQLString(GRAPHQL_DATE_FORMAT.format(value.toString()))
-        }
-
-    }
 
     private val apolloClient = ApolloClient.builder()
             .serverUrl(BASE_URL)
             .okHttpClient(okHttpClient)
             .addCustomTypeAdapter(CustomType.URI, uriCustomTypeAdapter)
-            .addCustomTypeAdapter(CustomType.DATETIME, dateCustomTypeAdapter)
             .build()
 
     fun getRepositoriesCall(keyword: String): ApolloCall<RepositoryQuery.Data> {

@@ -1,7 +1,7 @@
 package app.com.githubexplorer
 
-import app.com.githubexplorer.data.GraphQLManager
 import app.com.githubexplorer.main.MainInteractor
+import app.com.githubexplorer.network.GraphQLManager
 import com.apollographql.apollo.ApolloCall
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock

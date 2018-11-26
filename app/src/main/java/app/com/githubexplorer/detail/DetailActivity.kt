@@ -3,7 +3,7 @@ package app.com.githubexplorer.detail
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import app.com.githubexplorer.R
-import app.com.githubexplorer.data.Repository
+import app.com.githubexplorer.network.Repository
 import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {

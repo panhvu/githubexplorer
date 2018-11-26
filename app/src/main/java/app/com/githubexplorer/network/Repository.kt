@@ -1,7 +1,6 @@
-package app.com.githubexplorer.data
+package app.com.githubexplorer.network
 
 import java.io.Serializable
-import java.util.*
 
 /**
  * Created by panhvu on 26.11.18.
@@ -12,7 +11,6 @@ data class Repository(
         val name: String,
         val description: String,
         val forkCount: Int,
-        val createdAt: Date,
         val stargazers: Int,
         val watchers: Int
 ) : Serializable

@@ -1,7 +1,7 @@
 package app.com.githubexplorer.main
 
 import app.com.githubexplorer.RepositoryQuery
-import app.com.githubexplorer.data.GraphQLManager
+import app.com.githubexplorer.network.GraphQLManager
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.rx2.Rx2Apollo
 import io.reactivex.Observable

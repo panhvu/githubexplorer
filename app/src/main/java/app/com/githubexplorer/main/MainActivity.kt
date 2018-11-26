@@ -8,10 +8,11 @@ import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.View
 import app.com.githubexplorer.R
-import app.com.githubexplorer.data.Dependencies
-import app.com.githubexplorer.data.Repository
 import app.com.githubexplorer.detail.DetailActivity
 import app.com.githubexplorer.main.adapter.ReposAdapter
+import app.com.githubexplorer.network.Dependencies
+import app.com.githubexplorer.network.Repository
+import app.com.githubexplorer.network.SchedulerProvider
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), MainView, ReposAdapter.RepoOnClickListener {
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity(), MainView, ReposAdapter.RepoOnClickList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        presenter = MainPresenter(this, Dependencies().mainInteractor)
+        presenter = MainPresenter(SchedulerProvider.default, Dependencies().mainInteractor, this)
 
         repos_list_view.layoutManager = LinearLayoutManager(this)
         adapter = ReposAdapter(mutableListOf(), this, this)

@@ -1,4 +1,4 @@
-package app.com.githubexplorer.data
+package app.com.githubexplorer.network
 
 import app.com.githubexplorer.main.MainInteractor
 
