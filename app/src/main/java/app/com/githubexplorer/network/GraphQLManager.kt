@@ -23,7 +23,7 @@ open class GraphQLManager {
             .addInterceptor{ chain ->
                 chain.proceed(chain.request().newBuilder()
                         .addHeader("Authorization",
-                                "bearer ede413efeee2b5081eb8b62b710ed21e6c4016bf")
+                                "bearer 30aecf77eb9ee843d257b254790433d60a4e8739")
                         .build() )}
             .build()
 
