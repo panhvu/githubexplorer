@@ -12,5 +12,6 @@ data class Repository(
         val description: String,
         val forkCount: Int,
         val stargazers: Int,
-        val watchers: Int
+        val watchersCount: Int,
+        val watchers: List<Watcher>
 ) : Serializable

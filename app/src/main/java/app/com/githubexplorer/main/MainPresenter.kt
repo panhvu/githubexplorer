@@ -3,6 +3,7 @@ package app.com.githubexplorer.main
 import app.com.githubexplorer.RepositoryQuery
 import app.com.githubexplorer.network.Repository
 import app.com.githubexplorer.network.SchedulerProvider
+import app.com.githubexplorer.network.Watcher
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 
@@ -29,10 +30,11 @@ class MainPresenter(
                                 val repos = it.data()?.search()?.repositories() as MutableList<RepositoryQuery.AsRepository>
                                 val resultList = mutableListOf<Repository>()
                                 var r: Repository
+
                                 for (repo in repos) {
                                     r = Repository(repo.owner().avatarUrl().toString(), repo.name(),
                                             repo.description() ?: "", repo.forkCount(),
-                                            repo.stargazers().totalCount(), repo.watchers().totalCount())
+                                            repo.stargazers().totalCount(), repo.watchers().totalCount(), parseWatchers(repo))
                                     resultList.add(r)
                                 }
                                 view.showResults(resultList)
@@ -44,6 +46,16 @@ class MainPresenter(
 
 
         )
+    }
+
+    private fun parseWatchers(repo: RepositoryQuery.AsRepository): List<Watcher> {
+        val watchers = mutableListOf<Watcher>()
+        var w: Watcher
+        for (watcher in repo.watchers().watchers()!!){
+            w = Watcher(watcher.avatarUrl().toString(), watcher.name() ?: "")
+            watchers.add(w)
+        }
+        return watchers
     }
 
     fun unbind() {

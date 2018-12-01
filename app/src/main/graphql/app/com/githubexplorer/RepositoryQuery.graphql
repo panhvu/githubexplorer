@@ -13,10 +13,14 @@ query RepositoryQuery ($keyword:String!){
           stargazers {
             totalCount
           }
-          watchers {
+          watchers (last: 20) {
+            watchers: nodes {
+                name
+                avatarUrl
+            }
             totalCount
           }
         }
-      }
+    }
   }
 }
