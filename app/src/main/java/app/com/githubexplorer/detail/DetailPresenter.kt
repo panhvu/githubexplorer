@@ -17,43 +17,50 @@ class DetailPresenter(
 
     private val disposeBag = CompositeDisposable()
     private lateinit var watchersList: MutableList<Watcher>
+    private lateinit var repoOwner: String
+    private lateinit var repoName: String
     private lateinit var endCursor: String
 
     fun getWatchers(owner: String, name: String) {
         watchersList = mutableListOf()
+        this.repoOwner = owner
+        this.repoName = name
 
         disposeBag.add(
                 interactor.getWatchers(owner, name)
                         .subscribeOn(scheduler.io)
                         .observeOn(scheduler.main)
                         .subscribeBy {
-                            val watchers = it.data()?.repository()?.watchers()
-                            if(watchers?.totalCount()!! > 0) {
-                                // get results and pass to view
-                                for (watcher in watchers.nodes()!!) {
-                                    watchersList.add(parseWatcher(watcher))
-                                }
-
-                                view.showResults(watchersList)
-
-                                // pagination in case there are more results
-                                view.hasNext(watchers.pageInfo().hasNextPage())
-                                endCursor = watchers.pageInfo().endCursor() ?: ""
-                            }
+                            handleSearchResponse(it.data()?.repository()?.watchers()!!)
                         }
         )
     }
 
-    /*fun loadMore() {
+    fun loadMore() {
         disposeBag.add(
-                interactor.loadMore(keyword, endCursor)
+                interactor.loadMore(repoOwner, repoName, endCursor)
                         .subscribeOn(scheduler.io)
                         .observeOn(scheduler.main)
                         .subscribeBy {
-                            handleSearchResponse(it.data()?.search()!!)
+                            handleSearchResponse(it.data()?.repository()?.watchers()!!)
                         }
         )
-    }*/
+    }
+
+    private fun handleSearchResponse(watchers: WatcherQuery.Watchers) {
+        if(watchers.totalCount() > 0) {
+            // get results and pass to view
+            for (watcher in watchers.nodes()!!) {
+                watchersList.add(parseWatcher(watcher))
+            }
+
+            view.showResults(watchersList)
+
+            // pagination in case there are more results
+            view.hasNext(watchers.pageInfo().hasNextPage())
+            endCursor = watchers.pageInfo().endCursor() ?: ""
+        }
+    }
 
     private fun parseWatcher(watcher: WatcherQuery.Node): Watcher {
         return Watcher(watcher.avatarUrl().toString(), watcher.name() ?: "")

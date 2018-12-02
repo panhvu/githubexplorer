@@ -19,4 +19,7 @@ class DetailInteractor (
         return Rx2Apollo.from(graphQLManager.getWatchersCall(owner, name))
     }
 
+    fun loadMore(owner: String, name: String, endCursor: String): Observable<Response<WatcherQuery.Data>> {
+        return Rx2Apollo.from(graphQLManager.loadMoreWatchersCall(owner, name, endCursor))
+    }
 }

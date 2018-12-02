@@ -48,7 +48,7 @@ class DetailActivity : AppCompatActivity(), DetailView, OnBottomReachedListener 
     override fun onBottomReached() {
         if (hasNext) {
             load_more_view.visibility = View.VISIBLE
-            //presenter.loadMore()
+            presenter.loadMore()
         } else {
             load_more_view.visibility = View.GONE
         }

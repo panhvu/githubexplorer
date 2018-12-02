@@ -109,6 +109,7 @@
         android:layout_height="50dp"
         android:visibility="gone"
         android:text="Loading..."
+        android:textColor="@color/colorAccent"
         android:layout_gravity="center"
         android:layout_margin="10dp" />
 </LinearLayout>

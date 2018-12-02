@@ -82,4 +82,18 @@ open class GraphQLManager {
 
         return watchersCall
     }
+
+    fun loadMoreWatchersCall(owner: String, name: String, endCursor: String): ApolloCall<WatcherQuery.Data> {
+        val watchersCall: ApolloCall<WatcherQuery.Data>
+        val watchersQuery = WatcherQuery.builder()
+                .owner(owner)
+                .name(name)
+                .limit(LIMIT)
+                .endCursor(endCursor)
+                .build()
+        watchersCall = apolloClient.query(watchersQuery)
+                .responseFetcher(ApolloResponseFetchers.NETWORK_FIRST)
+
+        return watchersCall
+    }
 }

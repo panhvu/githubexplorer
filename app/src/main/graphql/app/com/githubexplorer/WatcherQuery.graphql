@@ -1,6 +1,6 @@
-query WatcherQuery ($owner:String!, $name:String!, $limit:Int!) {
+query WatcherQuery ($owner:String!, $name:String!, $limit:Int!, $endCursor: String) {
   repository(owner:$owner, name:$name) {
-    watchers (first: $limit) {
+    watchers (first: $limit, after: $endCursor) {
             nodes {
               name
               avatarUrl
