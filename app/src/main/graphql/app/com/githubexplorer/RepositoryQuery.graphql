@@ -1,6 +1,10 @@
-query RepositoryQuery ($keyword:String!){
-  search(query:$keyword, type:REPOSITORY, last: 20) {
+query RepositoryQuery ($keyword:String!, $endCursorId:String){
+  search(query:$keyword, type:REPOSITORY, last: 20, after:$endCursorId) {
     repositoryCount
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
     repositories: nodes {
         ... on Repository {
           name

@@ -34,7 +34,8 @@ class MainPresenter(
                                 for (repo in repos) {
                                     r = Repository(repo.owner().avatarUrl().toString(), repo.name(),
                                             repo.description() ?: "", repo.forkCount(),
-                                            repo.stargazers().totalCount(), repo.watchers().totalCount(), parseWatchers(repo))
+                                            repo.stargazers().totalCount(), repo.watchers().totalCount(),
+                                            parseWatchers(repo))
                                     resultList.add(r)
                                 }
                                 view.showResults(resultList)
