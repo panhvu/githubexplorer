@@ -11,6 +11,7 @@ query RepositoryQuery ($keyword:String!, $limit: Int!, $endCursorId:String){
           description
           forkCount
           owner {
+            login
             avatarUrl
           }
 
@@ -18,10 +19,6 @@ query RepositoryQuery ($keyword:String!, $limit: Int!, $endCursorId:String){
             totalCount
           }
           watchers (last: $limit) {
-            watchers: nodes {
-                name
-                avatarUrl
-            }
             totalCount
           }
         }

@@ -1,0 +1,15 @@
+query WatcherQuery ($owner:String!, $name:String!, $limit:Int!) {
+  repository(owner:$owner, name:$name) {
+    watchers (first: $limit) {
+            nodes {
+              name
+              avatarUrl
+            }
+            totalCount
+            pageInfo {
+                hasNextPage
+                endCursor
+            }
+    }
+  }
+}

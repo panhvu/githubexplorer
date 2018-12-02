@@ -2,6 +2,7 @@ package app.com.githubexplorer.network
 
 import android.net.Uri
 import app.com.githubexplorer.RepositoryQuery
+import app.com.githubexplorer.WatcherQuery
 import app.com.githubexplorer.type.CustomType
 import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.ApolloClient
@@ -67,5 +68,18 @@ open class GraphQLManager {
                 .responseFetcher(ApolloResponseFetchers.NETWORK_FIRST)
 
         return repositoriesCall
+    }
+
+    fun getWatchersCall(owner: String, name: String): ApolloCall<WatcherQuery.Data> {
+        val watchersCall: ApolloCall<WatcherQuery.Data>
+        val watchersQuery = WatcherQuery.builder()
+                .owner(owner)
+                .name(name)
+                .limit(LIMIT)
+                .build()
+        watchersCall = apolloClient.query(watchersQuery)
+                .responseFetcher(ApolloResponseFetchers.NETWORK_FIRST)
+
+        return watchersCall
     }
 }

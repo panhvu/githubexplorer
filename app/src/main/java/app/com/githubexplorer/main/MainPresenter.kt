@@ -2,8 +2,8 @@ package app.com.githubexplorer.main
 
 import app.com.githubexplorer.RepositoryQuery
 import app.com.githubexplorer.network.SchedulerProvider
+import app.com.githubexplorer.network.data.Owner
 import app.com.githubexplorer.network.data.Repository
-import app.com.githubexplorer.network.data.Watcher
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 
@@ -64,24 +64,16 @@ class MainPresenter(
         else {
             view.showEmptyMessage()
         }
-
     }
 
     private fun parseRepo(repo: RepositoryQuery.AsRepository): Repository {
-        return Repository(repo.owner().avatarUrl().toString(), repo.name(),
+        return Repository(parseOwner(repo), repo.name(),
                 repo.description() ?: "", repo.forkCount(),
-                repo.stargazers().totalCount(), repo.watchers().totalCount(),
-                parseWatchers(repo))
+                repo.stargazers().totalCount(), repo.watchers().totalCount())
     }
 
-    private fun parseWatchers(repo: RepositoryQuery.AsRepository): MutableList<Watcher> {
-        val watchers = mutableListOf<Watcher>()
-        var w: Watcher
-        for (watcher in repo.watchers().watchers()!!){
-            w = Watcher(watcher.avatarUrl().toString(), watcher.name() ?: "")
-            watchers.add(w)
-        }
-        return watchers
+    private fun parseOwner(repo: RepositoryQuery.AsRepository) : Owner {
+        return Owner(repo.owner().login(), repo.owner().avatarUrl().toString())
     }
 
     fun unbind() {
