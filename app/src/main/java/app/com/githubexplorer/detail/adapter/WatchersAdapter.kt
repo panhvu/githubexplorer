@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import app.com.githubexplorer.R
 import app.com.githubexplorer.network.data.Watcher
+import app.com.githubexplorer.uiutils.OnBottomReachedListener
 
 /**
  * Created by panhvu on 25.11.18.
@@ -13,7 +14,8 @@ import app.com.githubexplorer.network.data.Watcher
 
 class WatchersAdapter(
         var watchersList: List<Watcher>,
-        val context: Context
+        val context: Context,
+        val onBottomReachedListener: OnBottomReachedListener
 ) : RecyclerView.Adapter<WatchersViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -24,6 +26,9 @@ class WatchersAdapter(
 
     override fun onBindViewHolder(holder: WatchersViewHolder, position: Int) {
         holder.bindItems(watchersList[position])
+        if (position == itemCount-1) {
+            onBottomReachedListener.onBottomReached()
+        }
     }
 
     override fun getItemCount(): Int {

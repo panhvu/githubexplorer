@@ -7,13 +7,13 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.View
-import app.com.githubexplorer.OnBottomReachedListener
 import app.com.githubexplorer.R
 import app.com.githubexplorer.detail.DetailActivity
 import app.com.githubexplorer.main.adapter.ReposAdapter
 import app.com.githubexplorer.network.Dependencies
 import app.com.githubexplorer.network.SchedulerProvider
 import app.com.githubexplorer.network.data.Repository
+import app.com.githubexplorer.uiutils.OnBottomReachedListener
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), MainView, ReposAdapter.RepoOnClickListener, OnBottomReachedListener {
@@ -89,6 +89,9 @@ class MainActivity : AppCompatActivity(), MainView, ReposAdapter.RepoOnClickList
         if (empty_view.visibility == View.GONE) {
             empty_view.visibility = View.VISIBLE
             repos_list_view.visibility = View.GONE
+        }
+        if (load_more_view.visibility == View.VISIBLE) {
+            load_more_view.visibility = View.GONE
         }
     }
 
