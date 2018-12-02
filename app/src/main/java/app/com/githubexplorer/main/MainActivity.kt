@@ -77,6 +77,10 @@ class MainActivity : AppCompatActivity(), MainView, ReposAdapter.RepoOnClickList
             repos_list_view.visibility = View.VISIBLE
             empty_view.visibility = View.GONE
         }
+        if (load_more_view.visibility == View.VISIBLE) {
+            load_more_view.visibility = View.GONE
+        }
+
         adapter.reposList = results
         adapter.notifyDataSetChanged()
     }

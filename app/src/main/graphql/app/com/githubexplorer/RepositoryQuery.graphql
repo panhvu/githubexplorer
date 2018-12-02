@@ -1,5 +1,5 @@
-query RepositoryQuery ($keyword:String!, $endCursorId:String){
-  search(query:$keyword, type:REPOSITORY, last: 20, after:$endCursorId) {
+query RepositoryQuery ($keyword:String!, $limit: Int!, $endCursorId:String){
+  search(query:$keyword, type:REPOSITORY, last: $limit, after:$endCursorId) {
     repositoryCount
     pageInfo {
       hasNextPage
@@ -17,7 +17,7 @@ query RepositoryQuery ($keyword:String!, $endCursorId:String){
           stargazers {
             totalCount
           }
-          watchers (last: 20) {
+          watchers (last: $limit) {
             watchers: nodes {
                 name
                 avatarUrl

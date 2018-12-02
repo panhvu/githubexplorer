@@ -17,7 +17,7 @@ import okhttp3.OkHttpClient
 open class GraphQLManager {
 
     private val BASE_URL = "https://api.github.com/graphql"
-
+    private val LIMIT = 20
 
     private val okHttpClient = OkHttpClient.Builder()
             .addInterceptor{ chain ->
@@ -48,6 +48,7 @@ open class GraphQLManager {
         val repositoriesCall: ApolloCall<RepositoryQuery.Data>
         val repositoryQuery = RepositoryQuery.builder()
                 .keyword(keyword)
+                .limit(LIMIT)
                 .build()
         repositoriesCall = apolloClient.query(repositoryQuery)
                 .responseFetcher(ApolloResponseFetchers.NETWORK_FIRST)
@@ -55,4 +56,16 @@ open class GraphQLManager {
         return repositoriesCall
     }
 
+    fun loadMoreRepositoriesCall(keyword: String, endCursor: String): ApolloCall<RepositoryQuery.Data> {
+        val repositoriesCall: ApolloCall<RepositoryQuery.Data>
+        val repositoryQuery = RepositoryQuery.builder()
+                .keyword(keyword)
+                .limit(LIMIT)
+                .endCursorId(endCursor)
+                .build()
+        repositoriesCall = apolloClient.query(repositoryQuery)
+                .responseFetcher(ApolloResponseFetchers.NETWORK_FIRST)
+
+        return repositoriesCall
+    }
 }

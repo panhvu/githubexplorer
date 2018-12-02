@@ -18,4 +18,7 @@ class MainInteractor(
         return Rx2Apollo.from(graphQLManager.getRepositoriesCall(keyword))
     }
 
+    fun loadMore(keyword: String, endCursor: String): Observable<Response<RepositoryQuery.Data>> {
+        return Rx2Apollo.from(graphQLManager.loadMoreRepositoriesCall(keyword, endCursor))
+    }
 }
