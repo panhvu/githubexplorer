@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import app.com.githubexplorer.R
 import app.com.githubexplorer.main.adapter.WatchersAdapter
-import app.com.githubexplorer.network.Repository
+import app.com.githubexplorer.network.data.Repository
 import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {

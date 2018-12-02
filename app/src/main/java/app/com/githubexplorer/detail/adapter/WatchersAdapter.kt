@@ -5,8 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import app.com.githubexplorer.R
-import app.com.githubexplorer.network.Repository
-import app.com.githubexplorer.network.Watcher
+import app.com.githubexplorer.network.data.Watcher
 
 /**
  * Created by panhvu on 25.11.18.

@@ -4,7 +4,7 @@ import app.com.githubexplorer.main.MainInteractor
 import app.com.githubexplorer.main.MainPresenter
 import app.com.githubexplorer.main.MainView
 import app.com.githubexplorer.network.GraphQLManager
-import app.com.githubexplorer.network.Repository
+import app.com.githubexplorer.network.data.Repository
 import app.com.githubexplorer.network.SchedulerProvider
 import com.nhaarman.mockito_kotlin.*
 import io.reactivex.schedulers.TestScheduler

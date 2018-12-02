@@ -4,7 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import app.com.githubexplorer.network.Watcher
+import app.com.githubexplorer.network.data.Watcher
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_repo.view.*
 

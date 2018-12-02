@@ -7,18 +7,20 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.View
+import app.com.githubexplorer.OnBottomReachedListener
 import app.com.githubexplorer.R
 import app.com.githubexplorer.detail.DetailActivity
 import app.com.githubexplorer.main.adapter.ReposAdapter
 import app.com.githubexplorer.network.Dependencies
-import app.com.githubexplorer.network.Repository
 import app.com.githubexplorer.network.SchedulerProvider
+import app.com.githubexplorer.network.data.Repository
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), MainView, ReposAdapter.RepoOnClickListener {
+class MainActivity : AppCompatActivity(), MainView, ReposAdapter.RepoOnClickListener, OnBottomReachedListener {
 
     private lateinit var presenter: MainPresenter
     private lateinit var adapter: ReposAdapter
+    private var hasNext = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +29,7 @@ class MainActivity : AppCompatActivity(), MainView, ReposAdapter.RepoOnClickList
         presenter = MainPresenter(SchedulerProvider.default, Dependencies().mainInteractor, this)
 
         repos_list_view.layoutManager = LinearLayoutManager(this)
-        adapter = ReposAdapter(mutableListOf(), this, this)
+        adapter = ReposAdapter(mutableListOf(), this, this, this)
         repos_list_view.adapter = adapter
     }
 
@@ -50,6 +52,26 @@ class MainActivity : AppCompatActivity(), MainView, ReposAdapter.RepoOnClickList
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onPause() {
+        presenter.unbind()
+        super.onPause()
+    }
+
+    override fun onRepoClicked(repo: Repository) {
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra("repo", repo)
+        startActivity(intent)
+    }
+
+    override fun onBottomReached() {
+        if (hasNext) {
+            load_more_view.visibility = View.VISIBLE
+            presenter.loadMore()
+        } else {
+            load_more_view.visibility = View.GONE
+        }
+    }
+
     override fun showResults(results: MutableList<Repository>) {
         if (repos_list_view.visibility == View.GONE) {
             repos_list_view.visibility = View.VISIBLE
@@ -66,14 +88,7 @@ class MainActivity : AppCompatActivity(), MainView, ReposAdapter.RepoOnClickList
         }
     }
 
-    override fun onRepoClicked(repo: Repository) {
-        val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra("repo", repo)
-        startActivity(intent)
-    }
-
-    override fun onPause() {
-        presenter.unbind()
-        super.onPause()
+    override fun hasNext(flag: Boolean) {
+        hasNext = flag
     }
 }
