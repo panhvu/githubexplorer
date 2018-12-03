@@ -1,11 +1,9 @@
-package app.com.githubexplorer
+package app.com.githubexplorer.main
 
-import app.com.githubexplorer.main.MainInteractor
+import app.com.githubexplorer.RepositoryQuery
 import app.com.githubexplorer.network.GraphQLManager
 import com.apollographql.apollo.ApolloCall
-import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
-import org.junit.Assert.assertEquals
 import org.junit.Test
 
 
@@ -25,11 +23,13 @@ class MainInteractorTest {
 
         val mockApolloCall = mock<ApolloCall<RepositoryQuery.Data>>()
         val mockGraphQLManager = mock<GraphQLManager> {
-            on { getRepositoriesCall(any()) }.then { mockApolloCall }
+            on { getRepositoriesCall("test") }.then { mockApolloCall }
         }
 
         val testInteractor = MainInteractor(mockGraphQLManager)
-        assertEquals(mockApolloCall, testInteractor.getRepositories("test"))
+        testInteractor.getRepositories("test")
+                .test()
+                .assertComplete()
     }
 
 }
