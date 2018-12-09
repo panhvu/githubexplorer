@@ -15,7 +15,7 @@ import okhttp3.OkHttpClient
  * Created by panhvu on 25.11.18.
  */
 
-open class GraphQLManager {
+open class GraphQLRepository {
 
     private val BASE_URL = "https://api.github.com/graphql"
     private val LIMIT = 20

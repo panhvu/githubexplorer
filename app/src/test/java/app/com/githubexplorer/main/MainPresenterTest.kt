@@ -1,6 +1,6 @@
 package app.com.githubexplorer.main
 
-import app.com.githubexplorer.network.GraphQLManager
+import app.com.githubexplorer.network.GraphQLRepository
 import app.com.githubexplorer.network.SchedulerProvider
 import app.com.githubexplorer.network.data.Owner
 import app.com.githubexplorer.network.data.Repository
@@ -34,8 +34,7 @@ class MainPresenterTest {
                 "tkadabench", "", 0, 0, 1)
 
         val mockView = mock<MainView>()
-        val interactor = MainInteractor(GraphQLManager())
-        val presenter = MainPresenter(testSchedulerProvider, interactor, mockView)
+        val presenter = MainPresenter(testSchedulerProvider, GraphQLRepository(), mockView)
         presenter.searchRepositories("tkadabench")
         testScheduler.triggerActions()
 
@@ -48,8 +47,7 @@ class MainPresenterTest {
     fun testSearchRepositories_Empty() {
         // test if empty message is shown in MainView for invalid search query
         val mockView = mock<MainView>()
-        val interactor = MainInteractor(GraphQLManager())
-        val presenter = MainPresenter(testSchedulerProvider, interactor, mockView)
+        val presenter = MainPresenter(testSchedulerProvider, GraphQLRepository(), mockView)
         presenter.searchRepositories("tjcgg")
         testScheduler.triggerActions()
 
@@ -62,8 +60,7 @@ class MainPresenterTest {
     fun testLoadMore_Success() {
         // test if more repositories are loaded when available for query
         val mockView = mock<MainView>()
-        val interactor = MainInteractor(GraphQLManager())
-        val presenter = MainPresenter(testSchedulerProvider, interactor, mockView)
+        val presenter = MainPresenter(testSchedulerProvider, GraphQLRepository(), mockView)
         presenter.searchRepositories("test")
         testScheduler.triggerActions()
 

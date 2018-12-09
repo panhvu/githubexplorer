@@ -1,6 +1,6 @@
 package app.com.githubexplorer.detail
 
-import app.com.githubexplorer.network.GraphQLManager
+import app.com.githubexplorer.network.GraphQLRepository
 import app.com.githubexplorer.network.SchedulerProvider
 import app.com.githubexplorer.network.data.Watcher
 import com.nhaarman.mockito_kotlin.*
@@ -30,8 +30,7 @@ class DetailPresenterTest {
     fun testGetWatchers_Success() {
         // test if watchers are shown in DetailView for given repo
         val mockView = mock<DetailView>()
-        val interactor = DetailInteractor(GraphQLManager())
-        val presenter = DetailPresenter(testSchedulerProvider, interactor, mockView)
+        val presenter = DetailPresenter(testSchedulerProvider, GraphQLRepository(), mockView)
         presenter.getWatchers("barkinet", "Barkinet")
         testScheduler.triggerActions()
 
@@ -44,8 +43,7 @@ class DetailPresenterTest {
     fun testGetWatchers_Empty() {
         // test when zero watchers found for repo
         val mockView = mock<DetailView>()
-        val interactor = DetailInteractor(GraphQLManager())
-        val presenter = DetailPresenter(testSchedulerProvider, interactor, mockView)
+        val presenter = DetailPresenter(testSchedulerProvider, GraphQLRepository(), mockView)
         presenter.getWatchers("jeanloic179", "hamien")
         testScheduler.triggerActions()
 
@@ -57,8 +55,7 @@ class DetailPresenterTest {
     fun testLoadMore_Success() {
         // test if more watchers are loaded when available for repo
         val mockView = mock<DetailView>()
-        val interactor = DetailInteractor(GraphQLManager())
-        val presenter = DetailPresenter(testSchedulerProvider, interactor, mockView)
+        val presenter = DetailPresenter(testSchedulerProvider, GraphQLRepository(), mockView)
         presenter.getWatchers("pytest-dev", "pytest")
         testScheduler.triggerActions()
 

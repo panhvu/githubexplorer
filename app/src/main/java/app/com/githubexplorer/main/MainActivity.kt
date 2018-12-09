@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), MainView, ReposAdapter.RepoOnClickList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        presenter = MainPresenter(SchedulerProvider.default, Dependencies().mainInteractor, this)
+        presenter = MainPresenter(SchedulerProvider.default, Dependencies().graphQLRepository, this)
 
         repos_list_view.layoutManager = LinearLayoutManager(this)
         adapter = ReposAdapter(mutableListOf(), this, this, this)

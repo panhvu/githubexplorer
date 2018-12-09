@@ -1,9 +1,11 @@
 package app.com.githubexplorer.main
 
 import app.com.githubexplorer.RepositoryQuery
+import app.com.githubexplorer.network.GraphQLRepository
 import app.com.githubexplorer.network.SchedulerProvider
 import app.com.githubexplorer.network.data.Owner
 import app.com.githubexplorer.network.data.Repository
+import com.apollographql.apollo.rx2.Rx2Apollo
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 
@@ -13,7 +15,7 @@ import io.reactivex.rxkotlin.subscribeBy
 
 class MainPresenter(
         private val scheduler: SchedulerProvider,
-        private val interactor: MainInteractor,
+        private val graphQLRepository: GraphQLRepository,
         private val view: MainView
 ) {
 
@@ -28,7 +30,7 @@ class MainPresenter(
         this.keyword = keyword
 
         disposeBag.add(
-                interactor.getRepositories(keyword)
+                Rx2Apollo.from(graphQLRepository.getRepositoriesCall(keyword))
                         .subscribeOn(scheduler.io)
                         .observeOn(scheduler.main)
                         .subscribeBy {
@@ -39,7 +41,7 @@ class MainPresenter(
 
     fun loadMore() {
         disposeBag.add(
-                interactor.loadMore(keyword, endCursor)
+                Rx2Apollo.from(graphQLRepository.loadMoreRepositoriesCall(keyword, endCursor))
                         .subscribeOn(scheduler.io)
                         .observeOn(scheduler.main)
                         .subscribeBy {

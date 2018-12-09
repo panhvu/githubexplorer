@@ -35,7 +35,7 @@ class DetailActivity : AppCompatActivity(), DetailView, OnBottomReachedListener 
         adapter = WatchersAdapter(emptyList(), this, this)
         watchers_list_view.adapter = adapter
 
-        presenter = DetailPresenter(SchedulerProvider.default, Dependencies().detailInteractor, this)
+        presenter = DetailPresenter(SchedulerProvider.default, Dependencies().graphQLRepository, this)
         presenter.getWatchers(repo.owner.login, repo.name)
 
     }
