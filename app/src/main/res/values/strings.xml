@@ -1,4 +1,14 @@
 <resources>
+
+    <!-- General -->
     <string name="app_name">GithubExplorer</string>
-    <string name="title_activity_detail">DetailActivity</string>
+    <string name="general_loading">Loading...</string>
+
+    <!-- MainActivity -->
+    <string name="activity_main_no_repos_for_key">No repositories found for searched keyword.</string>
+
+    <!-- DetailActivity -->
+    <string name="activity_detail_title">DetailActivity</string>
+    <string name="activity_detail_currently_watching">Currently watching:</string>
+
 </resources>
