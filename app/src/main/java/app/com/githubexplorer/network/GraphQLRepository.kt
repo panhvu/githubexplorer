@@ -11,10 +11,6 @@ import com.apollographql.apollo.response.CustomTypeAdapter
 import com.apollographql.apollo.response.CustomTypeValue
 import okhttp3.OkHttpClient
 
-/**
- * Created by panhvu on 25.11.18.
- */
-
 open class GraphQLRepository {
 
     private val BASE_URL = "https://api.github.com/graphql"
@@ -24,7 +20,7 @@ open class GraphQLRepository {
             .addInterceptor{ chain ->
                 chain.proceed(chain.request().newBuilder()
                         .addHeader("Authorization",
-                                "bearer 30aecf77eb9ee843d257b254790433d60a4e8739")
+                                "bearer 73badfc2042466552fe8d709d979f1041fca74cb")
                         .build() )}
             .build()
 

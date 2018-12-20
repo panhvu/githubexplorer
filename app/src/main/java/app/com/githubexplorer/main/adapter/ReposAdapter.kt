@@ -8,10 +8,6 @@ import app.com.githubexplorer.R
 import app.com.githubexplorer.network.data.Repository
 import app.com.githubexplorer.uiutils.OnBottomReachedListener
 
-/**
- * Created by panhvu on 25.11.18.
- */
-
 class ReposAdapter(
         var reposList: MutableList<Repository>,
         val context: Context,

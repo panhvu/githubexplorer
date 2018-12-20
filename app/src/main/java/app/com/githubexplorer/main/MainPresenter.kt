@@ -9,10 +9,6 @@ import com.apollographql.apollo.rx2.Rx2Apollo
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 
-/**
- * Created by panhvu on 25.11.18.
- */
-
 class MainPresenter(
         private val scheduler: SchedulerProvider,
         private val graphQLRepository: GraphQLRepository,

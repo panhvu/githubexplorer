@@ -8,10 +8,6 @@ import app.com.githubexplorer.network.data.Watcher
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_repo.view.*
 
-/**
- * Created by panhvu on 25.11.18.
- */
-
 class WatchersViewHolder(val context: Context, view: View) : RecyclerView.ViewHolder(view) {
     val owner = view.owner_img
     val name = view.repo_name
