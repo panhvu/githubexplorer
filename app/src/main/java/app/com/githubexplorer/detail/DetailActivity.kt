@@ -1,15 +1,15 @@
 package app.com.githubexplorer.detail
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import app.com.githubexplorer.R
-import app.com.githubexplorer.main.adapter.WatchersAdapter
+import app.com.githubexplorer.detail.adapter.WatchersAdapter
 import app.com.githubexplorer.network.Dependencies
 import app.com.githubexplorer.network.SchedulerProvider
-import app.com.githubexplorer.network.data.Repository
-import app.com.githubexplorer.network.data.Watcher
+import app.com.githubexplorer.network.model.Repository
+import app.com.githubexplorer.network.model.Watcher
 import app.com.githubexplorer.uiutils.OnBottomReachedListener
 import kotlinx.android.synthetic.main.activity_detail.*
 
@@ -23,7 +23,7 @@ class DetailActivity : AppCompatActivity(), DetailView, OnBottomReachedListener 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        val repo = intent.extras.get("repo") as Repository
+        val repo = intent?.extras?.get("repo") as Repository
 
         name.text = repo.name
         description.text = repo.description

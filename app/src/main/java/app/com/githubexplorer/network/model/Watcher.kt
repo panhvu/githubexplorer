@@ -1,4 +1,4 @@
-package app.com.githubexplorer.network.data
+package app.com.githubexplorer.network.model
 
 import java.io.Serializable
 

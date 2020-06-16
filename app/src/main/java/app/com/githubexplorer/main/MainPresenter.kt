@@ -3,8 +3,8 @@ package app.com.githubexplorer.main
 import app.com.githubexplorer.RepositoryQuery
 import app.com.githubexplorer.network.GraphQLRepository
 import app.com.githubexplorer.network.SchedulerProvider
-import app.com.githubexplorer.network.data.Owner
-import app.com.githubexplorer.network.data.Repository
+import app.com.githubexplorer.network.model.Owner
+import app.com.githubexplorer.network.model.Repository
 import com.apollographql.apollo.rx2.Rx2Apollo
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy

@@ -1,10 +1,10 @@
-package app.com.githubexplorer.main.adapter
+package app.com.githubexplorer.detail.adapter
 
 import android.content.Context
 import android.net.Uri
-import android.support.v7.widget.RecyclerView
 import android.view.View
-import app.com.githubexplorer.network.data.Watcher
+import androidx.recyclerview.widget.RecyclerView
+import app.com.githubexplorer.network.model.Watcher
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_repo.view.*
 

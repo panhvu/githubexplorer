@@ -1,6 +1,6 @@
 package app.com.githubexplorer.main
 
-import app.com.githubexplorer.network.data.Repository
+import app.com.githubexplorer.network.model.Repository
 
 interface MainView {
 

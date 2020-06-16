@@ -2,9 +2,9 @@ package app.com.githubexplorer.main.adapter
 
 import android.content.Context
 import android.net.Uri
-import android.support.v7.widget.RecyclerView
 import android.view.View
-import app.com.githubexplorer.network.data.Repository
+import androidx.recyclerview.widget.RecyclerView
+import app.com.githubexplorer.network.model.Repository
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_repo.view.*
 

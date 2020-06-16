@@ -2,8 +2,8 @@ package app.com.githubexplorer.main
 
 import app.com.githubexplorer.network.GraphQLRepository
 import app.com.githubexplorer.network.SchedulerProvider
-import app.com.githubexplorer.network.data.Owner
-import app.com.githubexplorer.network.data.Repository
+import app.com.githubexplorer.network.model.Owner
+import app.com.githubexplorer.network.model.Repository
 import com.nhaarman.mockito_kotlin.*
 import io.reactivex.schedulers.TestScheduler
 import org.junit.Before

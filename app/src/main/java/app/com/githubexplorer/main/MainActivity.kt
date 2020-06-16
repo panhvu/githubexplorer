@@ -2,17 +2,17 @@ package app.com.githubexplorer.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.LinearLayoutManager
 import app.com.githubexplorer.R
 import app.com.githubexplorer.detail.DetailActivity
 import app.com.githubexplorer.main.adapter.ReposAdapter
 import app.com.githubexplorer.network.Dependencies
 import app.com.githubexplorer.network.SchedulerProvider
-import app.com.githubexplorer.network.data.Repository
+import app.com.githubexplorer.network.model.Repository
 import app.com.githubexplorer.uiutils.OnBottomReachedListener
 import kotlinx.android.synthetic.main.activity_main.*
 

@@ -1,6 +1,6 @@
 package app.com.githubexplorer.detail
 
-import app.com.githubexplorer.network.data.Watcher
+import app.com.githubexplorer.network.model.Watcher
 
 interface DetailView {
 

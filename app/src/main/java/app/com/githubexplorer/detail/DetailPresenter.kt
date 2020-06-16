@@ -3,7 +3,7 @@ package app.com.githubexplorer.detail
 import app.com.githubexplorer.WatcherQuery
 import app.com.githubexplorer.network.GraphQLRepository
 import app.com.githubexplorer.network.SchedulerProvider
-import app.com.githubexplorer.network.data.Watcher
+import app.com.githubexplorer.network.model.Watcher
 import com.apollographql.apollo.rx2.Rx2Apollo
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
