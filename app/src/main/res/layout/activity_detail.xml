@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         card_view:cardCornerRadius="10dp">
 
         <LinearLayout
@@ -47,7 +47,7 @@
                     android:layout_height="15dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="12dp"
                     android:src="@drawable/ic_share" />
 
                 <TextView
@@ -61,7 +61,7 @@
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="12dp"
                     android:src="@drawable/ic_star" />
 
                 <TextView
@@ -75,7 +75,7 @@
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="12dp"
                     android:src="@drawable/ic_eye" />
 
                 <TextView
@@ -109,7 +109,7 @@
         android:layout_height="50dp"
         android:visibility="gone"
         android:text="@string/general_loading"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorPrimary"
         android:layout_gravity="center"
         android:layout_margin="10dp" />
 </LinearLayout>

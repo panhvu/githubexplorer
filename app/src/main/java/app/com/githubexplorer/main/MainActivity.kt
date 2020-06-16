@@ -53,6 +53,26 @@ class MainActivity : AppCompatActivity(), ReposAdapter.RepoOnClickListener, OnBo
         })
     }
 
+    private fun handleUIEvent(event: SearchUIEvent?) {
+        when (event) {
+            is SearchUIEvent.Empty-> {
+                if (empty_view.visibility == View.GONE) {
+                    empty_view.visibility = View.VISIBLE
+                    repos_list_view.visibility = View.GONE
+                }
+                if (load_more_view.visibility == View.VISIBLE) {
+                    load_more_view.visibility = View.GONE
+                }
+            }
+            is SearchUIEvent.HasMoreData -> {
+                if (event.flag)
+                    load_more_view.visibility = View.VISIBLE
+                else
+                    load_more_view.visibility = View.GONE
+            }
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.activity_main_menu, menu)
         val searchItem = menu?.findItem(R.id.action_search)
@@ -80,25 +100,5 @@ class MainActivity : AppCompatActivity(), ReposAdapter.RepoOnClickListener, OnBo
 
     override fun onBottomReached() {
         viewModel.onBottomReached()
-    }
-
-    private fun handleUIEvent(event: SearchUIEvent?) {
-        when (event) {
-            is SearchUIEvent.Empty-> {
-                if (empty_view.visibility == View.GONE) {
-                    empty_view.visibility = View.VISIBLE
-                    repos_list_view.visibility = View.GONE
-                }
-                if (load_more_view.visibility == View.VISIBLE) {
-                    load_more_view.visibility = View.GONE
-                }
-            }
-            is SearchUIEvent.HasMoreData -> {
-                if (event.flag)
-                    load_more_view.visibility = View.VISIBLE
-                else
-                    load_more_view.visibility = View.GONE
-            }
-        }
     }
 }
