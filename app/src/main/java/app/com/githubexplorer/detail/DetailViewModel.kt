@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.com.githubexplorer.WatcherQuery
 import app.com.githubexplorer.network.GraphQLRepository
+import app.com.githubexplorer.network.WatchersResponse
 import app.com.githubexplorer.network.model.Watcher
 import app.com.githubexplorer.utils.OneTimeEvent
 import kotlinx.coroutines.CoroutineScope
@@ -26,8 +27,8 @@ class DetailViewModel @Inject constructor(
     override val coroutineContext: CoroutineContext
         get() = viewModelScope.coroutineContext
 
-    private val _data = MutableLiveData<List<Watcher>>()
-    val data: LiveData<List<Watcher>> = _data
+    private val _data = MutableLiveData<MutableList<Watcher>>()
+    val data: LiveData<MutableList<Watcher>> = _data
     private val _uiEvent = MutableLiveData<OneTimeEvent<DetailUIEvent>>()
     internal val uiEvents: LiveData<OneTimeEvent<DetailUIEvent>> = _uiEvent
 
@@ -42,15 +43,7 @@ class DetailViewModel @Inject constructor(
 
         launch {
             val watchersResult = graphQLRepository.getWatchersCall(owner, name).repository()?.watchers()
-            if (watchersResult?.totalCount() == 0) {
-                _uiEvent.value = OneTimeEvent(DetailUIEvent.Empty)
-            } else {
-                _data.value = watchersResult?.toUIModel()
-
-                // pagination in case there are more results
-                hasNext = watchersResult?.pageInfo()!!.hasNextPage()
-                endCursor = watchersResult.pageInfo().endCursor() ?: ""
-            }
+            handleResponse(watchersResult)
         }
     }
 
@@ -59,12 +52,26 @@ class DetailViewModel @Inject constructor(
             _uiEvent.value = OneTimeEvent(DetailUIEvent.HasMoreData(true))
             launch {
                 val searchResult = graphQLRepository.loadMoreWatchersCall(repoOwner, repoName, endCursor).repository()?.watchers()
-                if (searchResult?.totalCount()!! > 0) {
-                    _data.value = searchResult.toUIModel()
-                }
+                handleResponse(searchResult)
             }
         } else {
             _uiEvent.value = OneTimeEvent(DetailUIEvent.HasMoreData(false))
+        }
+    }
+
+    private fun handleResponse(watchersResult: WatcherQuery.Watchers?) {
+        watchersResult?.let {
+            if (watchersResult.totalCount() == 0) {
+                _uiEvent.value = OneTimeEvent(DetailUIEvent.Empty)
+            } else {
+                val watchers = _data.value ?: mutableListOf()
+                watchers.addAll(watchersResult.toUIModel())
+                _data.value = watchers
+
+                // pagination in case there are more results
+                hasNext = watchersResult.pageInfo().hasNextPage()
+                endCursor = watchersResult.pageInfo().endCursor() ?: ""
+            }
         }
     }
 

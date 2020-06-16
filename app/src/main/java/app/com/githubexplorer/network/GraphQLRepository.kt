@@ -90,7 +90,6 @@ internal class GraphQLRepositoryImpl @Inject constructor(
     }
 
     override suspend fun loadMoreWatchersCall(owner: String, name: String, endCursor: String): WatchersResponse = suspendCoroutine { continuation ->
-        val watchersCall: ApolloCall<WatcherQuery.Data>
         val watchersQuery = WatcherQuery.builder()
                 .owner(owner)
                 .name(name)

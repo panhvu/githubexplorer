@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(), ReposAdapter.RepoOnClickListener, OnBo
 
     private fun handleUIEvent(event: SearchUIEvent?) {
         when (event) {
-            is SearchUIEvent.Empty-> {
+            is SearchUIEvent.Empty -> {
                 if (empty_view.visibility == View.GONE) {
                     empty_view.visibility = View.VISIBLE
                     repos_list_view.visibility = View.GONE

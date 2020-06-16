@@ -14,7 +14,6 @@ import app.com.githubexplorer.network.model.Repository
 import app.com.githubexplorer.utils.OnBottomReachedListener
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_detail.load_more_view
-import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class DetailActivity : AppCompatActivity(), OnBottomReachedListener {
@@ -60,11 +59,7 @@ class DetailActivity : AppCompatActivity(), OnBottomReachedListener {
 
     private fun handleUIEvent(event: DetailUIEvent?) {
         when (event) {
-            is DetailUIEvent.Empty-> {
-                if (empty_view.visibility == View.GONE) {
-                    empty_view.visibility = View.VISIBLE
-                    repos_list_view.visibility = View.GONE
-                }
+            is DetailUIEvent.Empty -> {
                 if (load_more_view.visibility == View.VISIBLE) {
                     load_more_view.visibility = View.GONE
                 }

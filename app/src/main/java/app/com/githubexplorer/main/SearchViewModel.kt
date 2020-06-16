@@ -26,8 +26,8 @@ class SearchViewModel @Inject constructor(
     override val coroutineContext: CoroutineContext
         get() = viewModelScope.coroutineContext
 
-    private val _data = MutableLiveData<List<Repository>>()
-    val data: LiveData<List<Repository>> = _data
+    private val _data = MutableLiveData<MutableList<Repository>>()
+    val data: LiveData<MutableList<Repository>> = _data
     private val _uiEvent = MutableLiveData<OneTimeEvent<SearchUIEvent>>()
     internal val uiEvents: LiveData<OneTimeEvent<SearchUIEvent>> = _uiEvent
     private lateinit var endCursor: String
@@ -39,15 +39,7 @@ class SearchViewModel @Inject constructor(
 
         launch {
             val searchResult = graphQLRepository.getRepositoriesCall(keyword).search()
-            if (searchResult.repositoryCount() == 0) {
-                _uiEvent.value = OneTimeEvent(SearchUIEvent.Empty)
-            } else {
-                _data.value = searchResult.toUIModel()
-
-                // pagination in case there are more results
-                hasNext = searchResult.pageInfo().hasNextPage()
-                endCursor = searchResult.pageInfo().endCursor() ?: ""
-            }
+            handleSearchResponse(searchResult)
         }
     }
 
@@ -56,12 +48,24 @@ class SearchViewModel @Inject constructor(
             _uiEvent.value = OneTimeEvent(SearchUIEvent.HasMoreData(true))
             launch {
                 val searchResult = graphQLRepository.loadMoreRepositoriesCall(keyword, endCursor).search()
-                if (searchResult.repositoryCount() > 0) {
-                    _data.value = searchResult.toUIModel()
-                }
+                handleSearchResponse(searchResult)
             }
         } else {
             _uiEvent.value = OneTimeEvent(SearchUIEvent.HasMoreData(false))
+        }
+    }
+
+    private fun handleSearchResponse(searchResult: RepositoryQuery.Search){
+        if (searchResult.repositoryCount() == 0) {
+            _uiEvent.value = OneTimeEvent(SearchUIEvent.Empty)
+        } else {
+            val repos = _data.value ?: mutableListOf()
+            repos.addAll(searchResult.toUIModel())
+            _data.value = repos
+
+            // pagination in case there are more results
+            hasNext = searchResult.pageInfo().hasNextPage()
+            endCursor = searchResult.pageInfo().endCursor() ?: ""
         }
     }
 
