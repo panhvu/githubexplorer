@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.com.githubexplorer.WatcherQuery
 import app.com.githubexplorer.network.GraphQLRepository
-import app.com.githubexplorer.network.WatchersResponse
 import app.com.githubexplorer.network.model.Watcher
+import app.com.githubexplorer.network.model.toUIModel
 import app.com.githubexplorer.utils.OneTimeEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -75,15 +75,4 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    private fun WatcherQuery.Watchers.toUIModel(): List<Watcher> {
-        val watcherList = mutableListOf<Watcher>()
-        for (watcher in this.nodes()!!) {
-            watcherList.add(parseWatcher(watcher))
-        }
-        return watcherList.toList()
-    }
-
-    private fun parseWatcher(watcher: WatcherQuery.Node): Watcher {
-        return Watcher(watcher.avatarUrl().toString(), watcher.name() ?: "")
-    }
 }

@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.com.githubexplorer.RepositoryQuery
 import app.com.githubexplorer.network.GraphQLRepository
-import app.com.githubexplorer.network.model.Owner
 import app.com.githubexplorer.network.model.Repository
+import app.com.githubexplorer.network.model.toUIModel
 import app.com.githubexplorer.utils.OneTimeEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -67,26 +67,6 @@ class SearchViewModel @Inject constructor(
             hasNext = searchResult.pageInfo().hasNextPage()
             endCursor = searchResult.pageInfo().endCursor() ?: ""
         }
-    }
-
-    private fun RepositoryQuery.Search.toUIModel(): List<Repository> {
-        val reposList = mutableListOf<Repository>()
-        // get results and pass to view
-        val repos = this.repositories() as MutableList<RepositoryQuery.AsRepository>
-        for (repo in repos) {
-            reposList.add(parseRepo(repo))
-        }
-        return reposList.toList()
-    }
-
-    private fun parseRepo(repo: RepositoryQuery.AsRepository): Repository {
-        return Repository(parseOwner(repo), repo.name(),
-                repo.description() ?: "", repo.forkCount(),
-                repo.stargazers().totalCount(), repo.watchers().totalCount())
-    }
-
-    private fun parseOwner(repo: RepositoryQuery.AsRepository): Owner {
-        return Owner(repo.owner().login(), repo.owner().avatarUrl().toString())
     }
 
 }
