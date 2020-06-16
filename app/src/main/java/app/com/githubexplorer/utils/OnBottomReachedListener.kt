@@ -1,4 +1,4 @@
-package app.com.githubexplorer.uiutils
+package app.com.githubexplorer.utils
 
 interface OnBottomReachedListener {
     fun onBottomReached()

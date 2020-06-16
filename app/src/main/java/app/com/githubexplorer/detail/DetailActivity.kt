@@ -2,26 +2,33 @@ package app.com.githubexplorer.detail
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import app.com.githubexplorer.App
 import app.com.githubexplorer.R
 import app.com.githubexplorer.detail.adapter.WatchersAdapter
-import app.com.githubexplorer.network.Dependencies
-import app.com.githubexplorer.network.SchedulerProvider
 import app.com.githubexplorer.network.model.Repository
-import app.com.githubexplorer.network.model.Watcher
-import app.com.githubexplorer.uiutils.OnBottomReachedListener
+import app.com.githubexplorer.utils.OnBottomReachedListener
 import kotlinx.android.synthetic.main.activity_detail.*
+import kotlinx.android.synthetic.main.activity_detail.load_more_view
+import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
-class DetailActivity : AppCompatActivity(), DetailView, OnBottomReachedListener {
+class DetailActivity : AppCompatActivity(), OnBottomReachedListener {
 
-    private lateinit var presenter: DetailPresenter
+    private val viewModel by viewModels<DetailViewModel> { viewModelFactory }
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var adapter: WatchersAdapter
-    private var hasNext = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
+        (application as App).component.inject(this)
 
         val repo = intent?.extras?.get("repo") as Repository
 
@@ -35,35 +42,43 @@ class DetailActivity : AppCompatActivity(), DetailView, OnBottomReachedListener 
         adapter = WatchersAdapter(emptyList(), this, this)
         watchers_list_view.adapter = adapter
 
-        presenter = DetailPresenter(SchedulerProvider.default, Dependencies().graphQLRepository, this)
-        presenter.getWatchers(repo.owner.login, repo.name)
+        viewModel.data.observe(this, Observer { watchers ->
+            if (load_more_view.visibility == View.VISIBLE) {
+                load_more_view.visibility = View.GONE
+            }
 
+            adapter.watchersList = watchers
+            adapter.notifyDataSetChanged()
+        })
+
+        viewModel.uiEvents.observe(this, Observer { event ->
+            handleUIEvent(event.getContentIfNotHandled())
+        })
+
+        viewModel.loadData(repo.owner.login, repo.name)
     }
 
-    override fun onPause() {
-        presenter.unbind()
-        super.onPause()
+    private fun handleUIEvent(event: DetailUIEvent?) {
+        when (event) {
+            is DetailUIEvent.Empty-> {
+                if (empty_view.visibility == View.GONE) {
+                    empty_view.visibility = View.VISIBLE
+                    repos_list_view.visibility = View.GONE
+                }
+                if (load_more_view.visibility == View.VISIBLE) {
+                    load_more_view.visibility = View.GONE
+                }
+            }
+            is DetailUIEvent.HasMoreData -> {
+                if (event.flag)
+                    load_more_view.visibility = View.VISIBLE
+                else
+                    load_more_view.visibility = View.GONE
+            }
+        }
     }
 
     override fun onBottomReached() {
-        if (hasNext) {
-            load_more_view.visibility = View.VISIBLE
-            presenter.loadMore()
-        } else {
-            load_more_view.visibility = View.GONE
-        }
-    }
-
-    override fun showResults(results: MutableList<Watcher>) {
-        if (load_more_view.visibility == View.VISIBLE) {
-            load_more_view.visibility = View.GONE
-        }
-
-        adapter.watchersList = results
-        adapter.notifyDataSetChanged()
-    }
-
-    override fun hasNext(flag: Boolean) {
-        hasNext = flag
+        viewModel.onBottomReached()
     }
 }

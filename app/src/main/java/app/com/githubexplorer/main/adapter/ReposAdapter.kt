@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import app.com.githubexplorer.R
 import app.com.githubexplorer.network.model.Repository
-import app.com.githubexplorer.uiutils.OnBottomReachedListener
+import app.com.githubexplorer.utils.OnBottomReachedListener
 
 class ReposAdapter(
         var reposList: MutableList<Repository>,
